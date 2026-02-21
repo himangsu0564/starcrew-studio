@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Starcrew Studio | Parallel World</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore the mystery of the Parallel World with Starcrew Studio. Download the official PDF and meet the Guardians of Balance.">
+    <meta name="keywords" content="Starcrew Studio, Parallel World, Guardians of Balance, Adventure Story, John, Alex, Maria, Sam">
+    <meta name="author" content="Starcrew Studio">
+
+    <!-- Open Graph (Social Media Preview) -->
+    <meta property="og:title" content="Starcrew Studio | Parallel World">
+    <meta property="og:description" content="Join the adventure and discover the legend of the Guardians.">
+    <meta property="og:image" content="https://himangsu0564.github.io/starcrew-studio/starcrew%20logo.jpg">
+    <meta property="og:url" content="https://himangsu0564.github.io/starcrew-studio/">
+    <meta property="og:type" content="website">
+
+    <!-- Optional Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Starcrew Studio | Parallel World">
+    <meta name="twitter:description" content="Join the adventure and discover the legend of the Guardians.">
+    <meta name="twitter:image" content="https://himangsu0564.github.io/starcrew-studio/starcrew%20logo.jpg">
+
+    <link rel="icon" href="starcrew logo.jpg" type="image/jpeg">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root { 
+            --primary-blue: #00d4ff; 
+            --bg-dark: #0a0a0c; 
+            --card-bg: rgba(22, 22, 26, 0.85);
+            --text-light: #e0e0e0; 
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', sans-serif; 
+            color: var(--text-light); 
+            line-height: 1.6;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: rgba(10, 10, 12, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo-img {
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid var(--primary-blue);
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .story-preview { padding: 100px 10%; text-align: center; }
+
+        .teaser-box { 
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            background: var(--card-bg); 
+            padding: 40px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-blue);
+            backdrop-filter: blur(5px);
+        }
+
+        .teaser-title {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .download-section { padding: 60px 10%; text-align: center; }
+
+        .btn-download {
+            background-color: var(--primary-blue);
+            color: #000;
+            padding: 20px 50px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            background: #fff;
+            box-shadow: 0 0 30px var(--primary-blue);
+        }
+
+        .character-preview { padding: 80px 10%; text-align: center; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .char-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+            display: block;
+            backdrop-filter: blur(5px);
+        }
+
+        .char-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-5px);
+        }
+
+        .char-card i {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: rgba(0,0,0,0.8);
+            color: #888;
+            border-top: 1px solid #333;
+        }
+
+        #thanksModal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            background: #16161a;
+            margin: 15% auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid var(--primary-blue);
+            border-radius: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="starcrew logo.jpg" alt="Starcrew Studio Logo" class="logo-img">
+        <span style="color:var(--primary-blue); font-weight:bold; letter-spacing:1px;">
+            STARCREW STUDIO
+        </span>
+    </div>
+</nav>
+
+<header>
+    <h1 style="font-size:3.5rem; text-shadow: 0 0 20px var(--primary-blue); margin-bottom:0;">
+        Parallel World
+    </h1>
+    <p style="max-width:600px; font-size:1.3rem; color:#ccc;">
+        Explore the mystery, master the balance, and join the legend.
+    </p>
+</header>
+
+<section class="story-preview">
+    <h2 style="font-size: 2.5rem; margin-bottom: 40px; color: #fff;">Story Preview</h2>
+
+    <div class="teaser-box">
+        <h3 class="teaser-title">Chapter 1: The Discovery</h3>
+
+        <p style="font-style: italic; font-size: 1.2rem; color: #bbb;">
+            "In a dimly lit bedroom, the clock read 10:45 PM. Evidence of an obsession with parallel worlds surrounded the desk... Tonight, his search had yielded an intriguing result—a game called <strong>'The Adventure of the Parallel World.'</strong>"
+        </p>
+
+        <p style="margin-top: 20px; color: #ccc;">
+            "Guys, you won't believe what I just found," John said into his headset.
+            "It promises to reveal the secrets of alternate realities. Do you want to play it with me?"
+        </p>
+    </div>
+</section>
+
+<section class="download-section">
+    <h2 style="margin-bottom:30px;">Ready for the Adventure?</h2>
+
+    <a href="adventure.pdf" download="Parallel_World_Adventure.pdf"
+       class="btn-download" onclick="openThanks()">
+        <i class="fas fa-file-download"></i>
+        DOWNLOAD FULL PDF
+    </a>
+</section>
+
+<section class="character-preview">
+    <h2>The Guardians of Balance</h2>
+    <p>Click a hero to see their lore.</p>
+
+    <div class="grid">
+        <a href="characters.html" class="char-card">
+            <i class="fas fa-crown"></i>
+            <h3>John</h3>
+            <p style="color:var(--primary-blue)">View Lore →</p>
+        </a>
+
+        <a href="characters.html" class="char-card">
+            <i class="fas fa-chess-knight"></i>
+            <h3>Alex</h3>
+            <p style="color:var(--primary-blue)">View Lore →</p>
+        </a>
+
+        <a href="characters.html" class="char-card">
+            <i class="fas fa-heart"></i>
+            <h3>Maria</h3>
+            <p style="color:var(--primary-blue)">View Lore →</p>
+        </a>
+
+        <a href="characters.html" class="char-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Sam</h3>
+            <p style="color:var(--primary-blue)">View Lore →</p>
+        </a>
+    </div>
+</section>
+
+<div id="thanksModal">
+    <div class="modal-content">
+        <h2 style="color:var(--primary-blue)">Adventure Started!</h2>
+        <p>Thank you for downloading. The parallel world awaits.</p>
+        <button class="btn-download"
+                onclick="closeThanks()"
+                style="padding:10px 30px; margin-top:20px;">
+            Close
+        </button>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 Starcrew Studio
+</footer>
+
+<script>
+    function openThanks() {
+        setTimeout(() => {
+            document.getElementById('thanksModal').style.display = 'block';
+        }, 500);
+    }
+
+    function closeThanks() {
+        document.getElementById('thanksModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
