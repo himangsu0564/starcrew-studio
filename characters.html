@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guardians Gallery | Starcrew Studio</title>
+
+    <meta name="description" content="Explore the mystery of the Parallel World with Starcrew Studio. Meet the Guardians of Balance: John, Alex, Maria, and Sam.">
+    <meta name="keywords" content="Starcrew Studio, Parallel World, Guardians of Balance, John, Alex, Maria, Sam, Character Lore">
+    <meta name="author" content="Starcrew Studio">
+
+    <meta property="og:title" content="Guardians Gallery | Starcrew Studio">
+    <meta property="og:description" content="Join the adventure and discover the full legend of the Guardians.">
+    <meta property="og:image" content="https://himangsu0564.github.io/starcrew-studio/starcrew%20logo.jpg">
+    <meta property="og:url" content="https://himangsu0564.github.io/starcrew-studio/characters.html">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" href="starcrew logo.jpg" type="image/jpeg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root { 
+            --primary-blue: #00d4ff; 
+            --bg-dark: #0a0a0c; 
+            --card-bg: rgba(22, 22, 26, 0.9); 
+            --text-light: #e0e0e0; 
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', sans-serif; 
+            color: var(--text-light);
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+
+        .back-btn { 
+            text-decoration: none; 
+            color: var(--primary-blue); 
+            font-weight: bold; 
+            margin-bottom: 30px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px; 
+            transition: 0.3s;
+            padding: 10px 0; /* Larger tap target */
+        }
+
+        .back-btn:hover { transform: translateX(-5px); }
+
+        h1 { 
+            font-size: 2.5rem; 
+            text-align: center; 
+            margin-bottom: 40px; 
+            text-shadow: 0 0 15px var(--primary-blue); 
+        }
+
+        .search-container { 
+            position: relative; 
+            max-width: 500px; 
+            margin: 0 auto 50px auto; 
+        }
+
+        #heroSearch { 
+            width: 100%; 
+            padding: 15px 50px; 
+            border-radius: 50px; 
+            border: 1px solid #333; 
+            background: rgba(0,0,0,0.7); 
+            color: white; 
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+            box-sizing: border-box;
+        }
+
+        .search-icon { 
+            position: absolute; 
+            left: 20px; 
+            top: 18px; 
+            color: var(--primary-blue); 
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .char-card { 
+            background: var(--card-bg); 
+            padding: 35px 20px; 
+            border-radius: 20px; 
+            text-align: center; 
+            border: 1px solid #333; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            backdrop-filter: blur(10px);
+        }
+
+        .char-card:hover { 
+            border-color: var(--primary-blue); 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2); 
+        }
+
+        .char-card i { 
+            font-size: 3rem; 
+            color: var(--primary-blue); 
+            margin-bottom: 15px; 
+        }
+
+        /* MODAL STYLES */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.9); 
+            backdrop-filter: blur(8px);
+            overflow-y: auto; /* Allow scrolling on long content */
+        }
+
+        .modal-content { 
+            background: #16161a; 
+            margin: 5% auto; /* Reduced margin for mobile */
+            padding: 40px; 
+            border-radius: 25px; 
+            max-width: 600px; 
+            width: 85%; 
+            border: 1px solid var(--primary-blue); 
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp { 
+            from { transform: translateY(20px); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
+
+        .close-modal { 
+            position: absolute; 
+            top: 15px; 
+            right: 20px; 
+            font-size: 35px; 
+            color: #555; 
+            cursor: pointer; 
+            padding: 10px; /* Touch friendly */
+        }
+
+        .close-modal:hover { color: var(--primary-blue); }
+
+        .modal-body h2 { 
+            color: var(--primary-blue); 
+            margin-top: 0; 
+            font-size: 2rem; 
+        }
+
+        .modal-body .role { 
+            font-style: italic; 
+            color: #888; 
+            margin-bottom: 20px; 
+            display: block; 
+        }
+
+        .modal-body p { 
+            line-height: 1.6; 
+            color: #ccc; 
+            font-size: 1rem;
+        }
+
+        .guardian-tag { 
+            display: inline-block; 
+            background: rgba(0, 212, 255, 0.1); 
+            color: var(--primary-blue); 
+            padding: 8px 15px; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            margin-top: 20px; 
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            font-size: 0.9rem;
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 40px; 
+            color: #444; 
+        }
+
+        /* MOBILE MEDIA QUERIES */
+        @media (max-width: 768px) {
+            .container { padding: 40px 15px; }
+            h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; } /* Single column stack */
+            .modal-content { 
+                padding: 30px 20px; 
+                margin: 10% auto;
+                width: 90%;
+            }
+            .modal-body h2 { font-size: 1.6rem; }
+            .modal-body p { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <h1>The Guardians of Balance</h1>
+
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="heroSearch" placeholder="Find a Guardian..." onkeyup="filterHeroes()">
+    </div>
+
+    <div class="grid" id="heroGrid">
+        <div class="char-card" onclick="openLore('john')">
+            <i class="fas fa-crown"></i>
+            <h3>John</h3>
+            <p>The Determined Leader</p>
+        </div>
+
+        <div class="char-card" onclick="openLore('alex')">
+            <i class="fas fa-chess-knight"></i>
+            <h3>Alex</h3>
+            <p>The Loyal Strategist</p>
+        </div>
+
+        <div class="char-card" onclick="openLore('maria')">
+            <i class="fas fa-heart"></i>
+            <h3>Maria</h3>
+            <p>The Compassionate Heart</p>
+        </div>
+
+        <div class="char-card" onclick="openLore('sam')">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Sam</h3>
+            <p>The Brave Protector</p>
+        </div>
+    </div>
+</div>
+
+<div id="loreModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeLore()">&times;</span>
+        <div id="loreBody" class="modal-body"></div>
+    </div>
+</div>
+
+<footer>&copy; 2026 Starcrew Studio</footer>
+
+<script>
+const heroLore = {
+    john: {
+        name: "John",
+        role: "The Determined Leader",
+        desc: "John is the driving force behind the adventure. Curious about parallel worlds and fearless in exploring the unknown, he is the one who first discovers the mysterious game that changes their lives. <br><br>Throughout their journey, John grows from a curious gamer into a true leader. His greatest fear is failure, but he learns that mistakes are stepping stones to growth. He leads not with arrogance, but with responsibility, courage, and trust in his friends.",
+        tag: "Guardian of Strength, Leadership, and Resilience"
+    },
+    alex: {
+        name: "Alex",
+        role: "The Loyal Strategist",
+        desc: "Alex is calm under pressure and thinks logically during intense battles. While others may act on instinct, Alex analyzes situations and finds strategic solutions. <br><br>Deep down, he struggles with a fear of abandonment, but through the trials of the parallel world, he learns that true bonds cannot be broken. His loyalty to his friends never wavers.",
+        tag: "Guardian of Loyalty, Intelligence, and Trust"
+    },
+    maria: {
+        name: "Maria",
+        role: "The Compassionate Heart",
+        desc: "Maria brings empathy and emotional strength to the team. She is perceptive and often understands situations on a deeper level than others. <br><br>Her greatest challenge is overcoming the fear of loss, but she learns that memories and love never truly disappear. Her emotional intelligence helps the group stay united during their darkest moments.",
+        tag: "Guardian of Compassion, Courage, and Emotional Strength"
+    },
+    sam: {
+        name: "Sam",
+        role: "The Brave Protector",
+        desc: "Sam may doubt himself at times, but when it truly matters, he stands firm. He struggles with feelings of inadequacy, yet repeatedly proves that he is capable and strong. <br><br>Sam’s growth is one of the most powerful transformations in the story. He evolves into a dependable protector who believes in his own worth.",
+        tag: "Guardian of Confidence, Bravery, and Inner Strength"
+    }
+};
+
+function openLore(heroKey) {
+    const hero = heroLore[heroKey];
+    const loreBody = document.getElementById('loreBody');
+    loreBody.innerHTML = `
+        <h2>${hero.name}</h2>
+        <span class="role">${hero.role}</span>
+        <p>${hero.desc}</p>
+        <div class="guardian-tag">${hero.tag}</div>
+    `;
+    document.getElementById('loreModal').style.display = 'block';
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLore() {
+    document.getElementById('loreModal').style.display = 'none';
+    // Restore body scrolling
+    document.body.style.overflow = 'auto';
+}
+
+function filterHeroes() {
+    let input = document.getElementById('heroSearch').value.toLowerCase();
+    let cards = document.getElementsByClassName('char-card');
+
+    for (let i = 0; i < cards.length; i++) {
+        let name = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+        cards[i].style.display = name.includes(input) ? "" : "none";
+    }
+}
+
+window.onclick = function(event) {
+    let modal = document.getElementById('loreModal');
+    if (event.target == modal) closeLore();
+}
+</script>
+
+</body>
+</html>
