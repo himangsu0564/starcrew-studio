@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VQBEKXDQS7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VQBEKXDQS7');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artifacts Archive | Starcrew Studio</title>
+    <link rel="icon" href="starcrew logo.jpg" type="image/jpeg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { 
+            --primary-blue: #00d4ff; 
+            --bg-dark: #0a0a0c; 
+            --card-bg: rgba(22, 22, 26, 0.95); 
+            --text-light: #e0e0e0;
+            --accent-purple: #bd00ff;
+        }
+
+        body { 
+            margin: 0; font-family: 'Segoe UI', sans-serif; color: var(--text-light);
+            background: radial-gradient(circle at center, #050b1f, #000);
+            background-attachment: fixed; min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+
+        .back-btn { 
+            text-decoration: none; color: var(--primary-blue); font-weight: bold; 
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 30px; 
+            transition: 0.3s; padding: 10px 0; /* Larger tap target */
+        }
+        .back-btn:hover { transform: translateX(-5px); text-shadow: 0 0 10px var(--primary-blue); }
+
+        h1 { text-align: center; font-size: 3rem; margin-bottom: 10px; text-shadow: 0 0 15px var(--primary-blue); }
+        .subtitle { text-align: center; color: #888; margin-bottom: 50px; font-style: italic; }
+
+        .chapter-header {
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            padding: 15px; text-align: center; margin: 50px 0 30px 0;
+            border-top: 1px solid var(--primary-blue); border-bottom: 1px solid var(--primary-blue);
+        }
+
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; margin-bottom: 40px;
+        }
+
+        .artifact-card { 
+            background: var(--card-bg); padding: 30px; border-radius: 20px; 
+            border: 1px solid #333; transition: 0.3s; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column;
+        }
+
+        .artifact-card:hover { 
+            border-color: var(--primary-blue); transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
+        }
+
+        .icon-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .icon-header i { font-size: 2.2rem; color: var(--primary-blue); text-shadow: 0 0 10px var(--primary-blue); }
+        .icon-header h3 { margin: 0; font-size: 1.3rem; color: #fff; letter-spacing: 1px; }
+
+        .loc-tag { font-size: 0.85rem; color: #aaa; margin-bottom: 15px; display: block; font-weight: bold; }
+        .loc-tag i { color: var(--accent-purple); margin-right: 5px; }
+
+        .desc { font-size: 0.95rem; line-height: 1.6; color: #ccc; margin-bottom: 15px; }
+        
+        .powers-title { font-size: 0.85rem; color: var(--primary-blue); text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
+        .powers-list { margin: 0; padding-left: 20px; font-size: 0.9rem; color: #ddd; list-style-type: square; }
+
+        .symbolism { 
+            margin-top: auto; padding-top: 20px; font-size: 0.85rem; 
+            border-top: 1px dotted #444; color: #00d4ff; font-style: italic;
+        }
+
+        footer { text-align: center; padding: 60px; color: #444; border-top: 1px solid #222; margin-top: 100px; }
+
+        /* --- MOBILE RESPONSIVENESS UPDATES --- */
+        @media (max-width: 768px) {
+            .container { padding: 40px 15px; }
+            
+            h1 { font-size: 2.2rem; }
+            .subtitle { margin-bottom: 30px; font-size: 0.9rem; }
+
+            .grid { 
+                grid-template-columns: 1fr; /* Stack cards vertically on mobile */
+                gap: 20px; 
+            }
+
+            .artifact-card { padding: 20px; }
+            
+            .chapter-header h2 { font-size: 1.4rem; }
+            
+            .icon-header i { font-size: 1.8rem; }
+            .icon-header h3 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn">← Back to Home</a>
+    
+    <h1>The Artifact Archives</h1>
+    <p class="subtitle">16 Major Relics and the Stabilization Constructs of the Parallel World</p>
+
+    <div class="chapter-header"><h2>Early Discovery Artifacts</h2></div>
+    <div class="grid">
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-eye"></i><h3>1. Amulet of Insight</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Forest of Whispers</span>
+            <p class="desc">Reveals hidden truths and identifies enemy weaknesses. Essential in discovering the vulnerability of the Desert Golem.</p>
+            <div class="powers-title">Capabilities:</div>
+            <ul class="powers-list">
+                <li>Exposes illusions</li>
+                <li>Helps solve complex puzzles</li>
+            </ul>
+            <div class="symbolism">Intelligence • Perception • Clarity</div>
+        </div>
+
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-shield-alt"></i><h3>2. Shield of Fortitude</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Desert of Shadows</span>
+            <p class="desc">A massive defensive relic essential for surviving harsh desert storms and heavy monster strikes.</p>
+            <div class="powers-title">Capabilities:</div>
+            <ul class="powers-list">
+                <li>Protects against heavy magical attacks</li>
+                <li>Increases endurance in battle</li>
+            </ul>
+            <div class="symbolism">Strength • Endurance • Resilience</div>
+        </div>
+
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-crown"></i><h3>3. Crown of Wisdom</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Mountain of Echoes</span>
+            <p class="desc">Earned after defeating the dragon guardian. Enhances the user's strategic awareness.</p>
+            <div class="powers-title">Capabilities:</div>
+            <ul class="powers-list">
+                <li>Mental clarity under pressure</li>
+                <li>Boosts teamwork coordination</li>
+            </ul>
+            <div class="symbolism">Leadership • Knowledge • Mastery</div>
+        </div>
+    </div>
+
+    <div class="chapter-header"><h2>Chapter 4: The Elemental Crystals</h2></div>
+    <div class="grid">
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-mountain"></i><h3>4. Earth Crystal</h3></div>
+            <span class="loc-tag">Chamber of Earth</span>
+            <p class="desc">Unlocks control over stone and terrain while significantly boosting physical durability.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-tint"></i><h3>5. Water Crystal</h3></div>
+            <span class="loc-tag">Chamber of Water</span>
+            <p class="desc">Grants adaptability, control over currents, and fluid, agile movement.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-fire"></i><h3>6. Fire Crystal</h3></div>
+            <span class="loc-tag">Chamber of Fire</span>
+            <p class="desc">Grants fire manipulation and a massive boost to courage and offensive power.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-wind"></i><h3>7. Air Crystal</h3></div>
+            <span class="loc-tag">Chamber of Air</span>
+            <p class="desc">Grants wind control, extreme speed, and heightened intuition.</p>
+        </div>
+    </div>
+
+    <div class="chapter-header"><h2>Chapter 5: Eternal Eclipse Relics</h2></div>
+    <div class="grid">
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-sun"></i><h3>8. Sunstone</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Realm of the Sun</span>
+            <p class="desc">Radiates intense light to counter darkness magic and strengthens fire abilities.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-moon"></i><h3>9. Mondial</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Realm of the Moon</span>
+            <p class="desc">Controls lunar energy and allows for navigation through shadow realms and illusions.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-star"></i><h3>10. Star Shard</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Realm of the Stars</span>
+            <p class="desc">Harnesses cosmic energy to significantly boost magical power and celestial attacks.</p>
+        </div>
+    </div>
+
+    <div class="chapter-header"><h2>Chapters 6–8: Pillars of Balance</h2></div>
+    <div class="grid">
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-monument"></i><h3>11. Pillar of Earth</h3></div>
+            <p class="desc">A world-stabilizing construct that maintains the stability of the land and terrain.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-water"></i><h3>12. Pillar of Water</h3></div>
+            <p class="desc">Maintains the balance of the world's oceans and currents.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-volcano"></i><h3>13. Pillar of Fire</h3></div>
+            <p class="desc">Regulates volcanic activity and the flow of fire energy throughout the realms.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-cloud"></i><h3>14. Pillar of Air</h3></div>
+            <p class="desc">Maintains atmospheric balance and air pressure across dimensions.</p>
+        </div>
+    </div>
+
+    <div class="chapter-header"><h2>The Core Artifacts</h2></div>
+    <div class="grid">
+        <div class="artifact-card" style="border: 1px solid gold;">
+            <div class="icon-header"><i class="fas fa-gem" style="color: gold;"></i><h3>15. Harmony Stone</h3></div>
+            <span class="loc-tag"><i class="fas fa-map-marker-alt"></i>Heart of the Forest</span>
+            <p class="desc">The most important artifact in existence. It maintains the balance between Earth and the Parallel World.</p>
+            <div class="symbolism">The Anchor of Dimensions</div>
+        </div>
+
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-seedling"></i><h3>16. Seed of Unity</h3></div>
+            <span class="loc-tag">Final Chapter</span>
+            <p class="desc">The final legacy artifact. Grows into the Tree of Balance to connect both worlds permanently.</p>
+            <div class="symbolism">Unity • Friendship • Future Harmony</div>
+        </div>
+    </div>
+
+    <div class="chapter-header"><h2>Special Mentions</h2></div>
+    <div class="grid">
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-scroll"></i><h3>Ancient Runes</h3></div>
+            <p class="desc">Represent aspects of reality. Required to unlock portals and dimensional travel.</p>
+        </div>
+        <div class="artifact-card">
+            <div class="icon-header"><i class="fas fa-door-open"></i><h3>Portal System</h3></div>
+            <p class="desc">Activated by artifacts to connect realms. Requires unity and courage to function.</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    &copy; 2026 Starcrew Studio | Guardians of the Parallel World
+</footer>
+
+</body>
+</html>
