@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal the Studio | Starcrew Studio</title>
+    <link rel="icon" href="starcrew logo.jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --neon: #00d4ff; --dark: #111115; --input: #0a0a0c; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #050505; color: #e0e0e0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        .contact-card { background: var(--dark); padding: 50px 40px; border-radius: 20px; width: 100%; max-width: 500px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        h1 { color: var(--neon); margin: 0 0 10px 0; font-size: 2rem; }
+        p { color: #888; margin-bottom: 35px; }
+        
+        input, textarea { 
+            width: 100%; padding: 15px; background: var(--input); border: 1px solid #222; 
+            border-radius: 10px; color: white; box-sizing: border-box; font-size: 1rem; margin-bottom: 20px; outline: none; 
+        }
+        input:focus, textarea:focus { border-color: var(--neon); }
+        
+        .btn-submit { 
+            background: var(--neon); color: #000; padding: 16px; border: none; border-radius: 10px; 
+            font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.3s; 
+        }
+        .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+        #msg { margin-top: 15px; text-align: center; font-size: 0.9rem; min-height: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="contact-card">
+    <h1>Signal the Studio</h1>
+    <p>Have a question? Send us a transmission.</p>
+    
+    <input type="text" id="subject" placeholder="Subject">
+    <textarea id="message" rows="6" placeholder="Message"></textarea>
+    
+    <button class="btn-submit" id="sendBtn">Send Message</button>
+    <div id="msg"></div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Your EXACT Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyAyOogHmf1Ffhg__-Cc-LrN013-QCMssq0",
+        authDomain: "starcrew-login.firebaseapp.com",
+        projectId: "starcrew-login"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let explorerName = "Guest";
+    let explorerEmail = "Not Logged In";
+
+    // Check login status to identify who is sending the message
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            explorerName = user.displayName || "Unknown Guardian";
+            explorerEmail = user.email;
+        }
+    });
+
+    document.getElementById('sendBtn').onclick = async () => {
+        const sub = document.getElementById('subject').value.trim();
+        const body = document.getElementById('message').value.trim();
+        const msgBox = document.getElementById('msg');
+        const btn = document.getElementById('sendBtn');
+
+        if (!sub || !body) {
+            msgBox.style.color = "#ff4b4b";
+            msgBox.innerText = "Please fill in all fields.";
+            return;
+        }
+
+        btn.disabled = true;
+        msgBox.style.color = "#00d4ff";
+        msgBox.innerText = "Sending transmission...";
+
+        try {
+            // This creates the "contacts" folder in your Firestore
+            await addDoc(collection(db, "contacts"), {
+                subject: sub,
+                message: body,
+                sender: explorerName,
+                email: explorerEmail,
+                sentAt: serverTimestamp()
+            });
+
+            msgBox.style.color = "#00ff88";
+            msgBox.innerText = "Transmission received, Guardian.";
+            
+            // Clear inputs
+            document.getElementById('subject').value = "";
+            document.getElementById('message').value = "";
+
+            setTimeout(() => { window.location.href = "index.html"; }, 2000);
+
+        } catch (err) {
+            console.error("Firebase Error:", err);
+            msgBox.style.color = "#ff4b4b";
+            msgBox.innerText = "Error: " + err.message;
+            btn.disabled = false;
+        }
+    };
+</script>
+</body>
+</html>
