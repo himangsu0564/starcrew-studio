@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guardian Awakening | Starcrew Studio</title>
+<link rel="icon" href="starcrew logo.jpg">
+
+<style>
+:root {
+    --primary: #00d4ff;
+    --bg: #07070a;
+    --card: rgba(22, 22, 26, 0.92);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #0a0a12, var(--bg));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 16px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+    z-index: 999;
+}
+.back-btn:hover {
+    background: var(--primary);
+    color: black;
+    box-shadow: 0 0 15px rgba(0,212,255,0.5);
+}
+
+/* card */
+.quiz-card {
+    width: 100%;
+    max-width: 650px;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 40px 25px;
+    border: 1px solid rgba(0,212,255,0.25);
+    box-shadow: 0 0 35px rgba(0,212,255,0.15);
+    text-align: center;
+}
+
+/* progress */
+.progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    transition: 0.4s;
+}
+
+#progress-text {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* question */
+.question {
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+/* options */
+.option {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,212,255,0.05);
+    color: white;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.option:hover {
+    background: var(--primary);
+    color: black;
+}
+
+/* RESULT */
+#result {
+    display: none;
+}
+
+/* image reveal */
+.character-img-container {
+    margin: 20px auto;
+    width: 220px;
+    height: 300px;
+}
+
+#character-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    opacity: 0;
+    transform: scale(0.7);
+    filter: brightness(0) blur(10px);
+    transition: all 0.8s ease;
+    box-shadow: 0 0 25px rgba(0,212,255,0.3);
+}
+
+#character-img.show {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1) blur(0);
+}
+
+.character {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-top: 10px;
+}
+
+/* button */
+.restart {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--primary);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACK BUTTON -->
+<a href="index.html" class="back-btn">← Back</a>
+
+<div class="quiz-card">
+
+<h1>Guardian Awakening</h1>
+
+<div id="progress-text">Question 1 / 13</div>
+<div class="progress-bar">
+    <div class="progress-fill" id="progress"></div>
+</div>
+
+<div id="quiz">
+    <div class="question" id="question"></div>
+    <div id="options"></div>
+</div>
+
+<div id="result">
+    <h2>You awakened as:</h2>
+
+    <div class="character-img-container">
+        <img id="character-img">
+    </div>
+
+    <div class="character" id="character"></div>
+    <p id="desc"></p>
+
+    <button class="restart" onclick="restart()">Play Again</button>
+</div>
+
+</div>
+
+<script>
+const questions = [
+{q:"What guides your decisions?",options:[
+{text:"Logic",type:"Alex"},
+{text:"Emotion",type:"Maria"},
+{text:"Instinct",type:"Sam"},
+{text:"Vision",type:"John"}]},
+
+{q:"In battle you are...",options:[
+{text:"Strategist",type:"Alex"},
+{text:"Protector",type:"Sam"},
+{text:"Healer",type:"Maria"},
+{text:"Leader",type:"John"}]},
+
+{q:"Your greatest power is...",options:[
+{text:"Mind",type:"Alex"},
+{text:"Heart",type:"Maria"},
+{text:"Strength",type:"Sam"},
+{text:"Command",type:"John"}]},
+
+{q:"People see you as...",options:[
+{text:"Wise",type:"Alex"},
+{text:"Kind",type:"Maria"},
+{text:"Strong",type:"Sam"},
+{text:"Inspirational",type:"John"}]},
+
+{q:"A crisis appears suddenly. You...",options:[
+{text:"Analyze",type:"Alex"},
+{text:"Help others",type:"Maria"},
+{text:"Defend",type:"Sam"},
+{text:"Lead",type:"John"}]},
+
+{q:"Your biggest weakness?",options:[
+{text:"Overthinking",type:"Alex"},
+{text:"Too emotional",type:"Maria"},
+{text:"Too aggressive",type:"Sam"},
+{text:"Too responsible",type:"John"}]},
+
+{q:"What motivates you?",options:[
+{text:"Knowledge",type:"Alex"},
+{text:"Love",type:"Maria"},
+{text:"Duty",type:"Sam"},
+{text:"Destiny",type:"John"}]},
+
+{q:"Your role in a team?",options:[
+{text:"Planner",type:"Alex"},
+{text:"Support",type:"Maria"},
+{text:"Defender",type:"Sam"},
+{text:"Leader",type:"John"}]},
+
+{q:"Choose a power:",options:[
+{text:"Intelligence",type:"Alex"},
+{text:"Healing",type:"Maria"},
+{text:"Strength",type:"Sam"},
+{text:"Fate control",type:"John"}]},
+
+{q:"In danger you...",options:[
+{text:"Think fast",type:"Alex"},
+{text:"Protect",type:"Maria"},
+{text:"Fight",type:"Sam"},
+{text:"Lead",type:"John"}]},
+
+{q:"What do you value?",options:[
+{text:"Truth",type:"Alex"},
+{text:"Kindness",type:"Maria"},
+{text:"Strength",type:"Sam"},
+{text:"Unity",type:"John"}]},
+
+{q:"Ideal place?",options:[
+{text:"Lab",type:"Alex"},
+{text:"Nature",type:"Maria"},
+{text:"Training ground",type:"Sam"},
+{text:"Command center",type:"John"}]},
+
+{q:"What defines a Guardian?",options:[
+{text:"Intelligence",type:"Alex"},
+{text:"Compassion",type:"Maria"},
+{text:"Power",type:"Sam"},
+{text:"Leadership",type:"John"}]}
+];
+
+let index = 0;
+let scores = {John:0, Alex:0, Maria:0, Sam:0};
+
+function loadQuestion(){
+    let q = questions[index];
+
+    document.getElementById("question").innerText = q.q;
+    document.getElementById("progress-text").innerText = `Question ${index+1} / ${questions.length}`;
+
+    let percent = (index / questions.length) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+
+    let html = "";
+    q.options.forEach(opt=>{
+        html += `<button class="option" onclick="choose('${opt.type}')">${opt.text}</button>`;
+    });
+
+    document.getElementById("options").innerHTML = html;
+}
+
+function choose(type){
+    scores[type]++;
+    index++;
+
+    if(index < questions.length){
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult(){
+    document.getElementById("quiz").style.display="none";
+    document.getElementById("progress-text").style.display="none";
+    document.getElementById("progress").style.width="100%";
+
+    let winner = Object.keys(scores).reduce((a,b)=>scores[a]>scores[b]?a:b);
+
+    const desc = {
+        John:"A born leader who inspires worlds.",
+        Alex:"A genius strategist with unmatched intelligence.",
+        Maria:"A compassionate healer full of empathy.",
+        Sam:"An unstoppable protector with immense strength."
+    };
+
+    const images = {
+        John:"john.png",
+        Alex:"alex.png",
+        Maria:"maria.png",
+        Sam:"sam.png"
+    };
+
+    document.getElementById("result").style.display="block";
+    document.getElementById("character").innerText = winner;
+    document.getElementById("desc").innerText = desc[winner];
+
+    let img = document.getElementById("character-img");
+    img.src = images[winner];
+
+    setTimeout(()=>{
+        img.classList.add("show");
+    },300);
+}
+
+function restart(){
+    index = 0;
+    scores = {John:0, Alex:0, Maria:0, Sam:0};
+
+    document.getElementById("result").style.display="none";
+    document.getElementById("quiz").style.display="block";
+    document.getElementById("progress-text").style.display="block";
+
+    let img = document.getElementById("character-img");
+    img.classList.remove("show");
+    img.src = "";
+
+    loadQuestion();
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

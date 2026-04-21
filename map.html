@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map of the Parallel World</title>
+
+<style>
+
+/* ===== GLOBAL ===== */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at center, #050b1f, #000);
+    color: white;
+    overflow: hidden;
+}
+
+/* Space drift */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,234,255,0.05), transparent 70%);
+    animation: drift 60s linear infinite;
+    z-index: 0;
+}
+
+@keyframes drift {
+    from { transform: translate(0,0) rotate(0deg); }
+    to { transform: translate(-10%, -10%) rotate(360deg); }
+}
+
+/* PARTICLES */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ===== UI ===== */
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: rgba(0, 234, 255, 0.1);
+    border: 1px solid #00eaff;
+    color: #00eaff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px;
+    z-index: 1000;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    color: #00eaff;
+    text-shadow: 0 0 20px #00eaff;
+}
+
+/* MAP */
+.map {
+    position: relative;
+    width: 100vw;
+    height: 85vh;
+    z-index: 2;
+}
+
+/* REALMS */
+.realm {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 2px solid #00eaff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    background: rgba(0,234,255,0.05);
+    box-shadow: 0 0 20px #00eaff;
+    padding: 10px;
+}
+
+.realm:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 40px #00eaff;
+}
+
+.realm.active {
+    animation: pulse 0.6s;
+}
+
+@keyframes pulse {
+    50% { transform: scale(1.3); }
+}
+
+/* POSITIONS */
+.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.top { top: 5%; left: 50%; transform: translateX(-50%); }
+.bottom { bottom: 5%; left: 50%; transform: translateX(-50%); }
+.left { left: 5%; top: 50%; transform: translateY(-50%); }
+.right { right: 5%; top: 50%; transform: translateY(-50%); }
+.top-left { top: 15%; left: 15%; }
+.top-right { top: 15%; right: 15%; }
+.bottom-left { bottom: 15%; left: 15%; }
+.bottom-right { bottom: 15%; right: 15%; }
+
+/* LORE */
+.lore-box {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    padding: 20px;
+    border: 2px solid #00eaff;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    z-index: 1001;
+    text-align: center;
+}
+
+.lore-box.show {
+    display: block;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    body { overflow: auto; }
+    .map { width: 1000px; height: 800px; }
+    .lore-box {
+        position: fixed;
+        width: 90%;
+        bottom: 10px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<a href="index.html" class="back-btn">← Back to Home</a>
+<h1>🌌 The Parallel World – Nexus Map</h1>
+
+<div class="map">
+
+    <div class="realm center" onclick="showLore('nexus', event)">Nexus of Realms</div>
+
+    <div class="realm top" onclick="showLore('sun', event)">Realm of Sun</div>
+    <div class="realm bottom" onclick="showLore('moon', event)">Realm of Moon</div>
+    <div class="realm left" onclick="showLore('earth', event)">Realm of Earth</div>
+    <div class="realm right" onclick="showLore('stars', event)">Realm of Stars</div>
+
+    <div class="realm top-left" onclick="showLore('abyss', event)">The Abyss</div>
+    <div class="realm top-right" onclick="showLore('forest', event)">Forest of Whispers</div>
+    <div class="realm bottom-left" onclick="showLore('desert', event)">Desert of Shadows</div>
+    <div class="realm bottom-right" onclick="showLore('harmony', event)">Heart of the Forest</div>
+
+</div>
+
+<div id="lore" class="lore-box"></div>
+
+<script>
+
+/* PARTICLES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+let mouse = {x:null,y:null};
+let currentColor = "0,234,255";
+
+const realmColors = {
+    nexus:"255,0,255",
+    sun:"255,140,0",
+    moon:"200,200,255",
+    earth:"0,255,100",
+    stars:"0,200,255",
+    abyss:"255,0,60",
+    forest:"0,255,150",
+    desert:"255,200,0",
+    harmony:"150,255,255"
+};
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener("resize",()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+window.addEventListener("mousemove",e=>{
+    mouse.x=e.x;
+    mouse.y=e.y;
+});
+
+class Particle{
+    constructor(){
+        this.x=Math.random()*canvas.width;
+        this.y=Math.random()*canvas.height;
+        this.size=Math.random()*2+1;
+        this.speedX=(Math.random()-0.5)*0.6;
+        this.speedY=(Math.random()-0.5)*0.6;
+    }
+
+    update(){
+        this.x+=this.speedX;
+        this.y+=this.speedY;
+
+        let dx=mouse.x-this.x;
+        let dy=mouse.y-this.y;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+
+        if(dist<120){
+            this.x-=dx*0.01;
+            this.y-=dy*0.01;
+        }
+
+        if(this.x<0)this.x=canvas.width;
+        if(this.x>canvas.width)this.x=0;
+        if(this.y<0)this.y=canvas.height;
+        if(this.y>canvas.height)this.y=0;
+    }
+
+    draw(){
+        ctx.fillStyle=`rgba(${currentColor},0.8)`;
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+    }
+}
+
+function initParticles(){
+    for(let i=0;i<120;i++){
+        particles.push(new Particle());
+    }
+}
+
+function connect(){
+    for(let a=0;a<particles.length;a++){
+        for(let b=a;b<particles.length;b++){
+            let dx=particles[a].x-particles[b].x;
+            let dy=particles[a].y-particles[b].y;
+            let dist=Math.sqrt(dx*dx+dy*dy);
+
+            if(dist<100){
+                ctx.strokeStyle=`rgba(${currentColor},${1-dist/100})`;
+                ctx.beginPath();
+                ctx.moveTo(particles[a].x,particles[a].y);
+                ctx.lineTo(particles[b].x,particles[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+        p.update();
+        p.draw();
+    });
+
+    connect();
+    requestAnimationFrame(animate);
+}
+
+initParticles();
+animate();
+
+/* LORE (UNCHANGED TEXT) */
+function showLore(place, e) {
+
+    currentColor = realmColors[place];
+
+    const lore = {
+        nexus: "The Nexus of Realms is the heart of all dimensions. Every realm converges here. It is where the Chaos Entity once attempted to unravel existence itself.",
+        sun: "A blazing land of fire trials and molten guardians. The Sunstone was forged here through courage and endurance.",
+        moon: "A silver realm of shadows and illusion. The Mondial was claimed by embracing fear and navigating the labyrinth of night.",
+        earth: "Towering mountains and ancient forests test resilience. The Earth Crystal was secured through strength and unity.",
+        stars: "A celestial domain of floating islands and cosmic puzzles. The Star Shard glows with the power of the universe.",
+        abyss: "A crimson sky hangs above a massive chasm. The descent into darkness tested their courage against monstrous guardians.",
+        forest: "A mystical woodland filled with illusions and whispers. Here, intelligence and perception determined survival.",
+        desert: "Under the Eternal Eclipse, this harsh wasteland hid relics that would determine the fate of both worlds.",
+        harmony: "The Heart of the Forest protects the Harmony Stone — the core of balance between the parallel world and Earth."
+    };
+
+    const box = document.getElementById("lore");
+    box.innerText = lore[place];
+    box.classList.add("show");
+
+    document.querySelectorAll('.realm').forEach(r=>r.classList.remove("active"));
+    e.target.classList.add("active");
+
+    if (window.innerWidth <= 768) {
+        box.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+</script>
+
+</body>
+</html>

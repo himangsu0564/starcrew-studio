@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artifacts Archive | Starcrew Studio</title>
+
+<link rel="icon" href="starcrew logo.jpg">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root { 
+    --primary-blue: #4cc9ff;
+    --bg-dark: #07090f;
+    --card-bg: rgba(255,255,255,0.04);
+    --text-light: #e6e6e6;
+    --accent-purple: #9d4edd;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--text-light);
+    background: radial-gradient(circle at top, #0b1225, #000);
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 60px 20px;
+}
+
+.back-btn {
+    color: var(--primary-blue);
+    text-decoration: none;
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+/* Title */
+h1 { text-align: center; font-size: 2.6rem; }
+.subtitle { text-align: center; color: #aaa; margin-bottom: 40px; }
+
+.chapter-header {
+    text-align: center;
+    margin: 50px 0 20px;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Card */
+.artifact-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.artifact-card:hover { transform: translateY(-5px); }
+
+.icon-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.icon-header i { color: var(--primary-blue); }
+
+.desc { color: #ccc; font-size: 0.9rem; }
+
+/* Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: 0.6s;
+}
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+}
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+.modal-content {
+    background: #111;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 650px;
+}
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.modal h3 { margin-top: 0; }
+.modal ul { padding-left: 18px; }
+
+.lore { display: none; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="index.html" class="back-btn">← Back</a>
+
+<h1>The Artifact Archives</h1>
+<p class="subtitle">18 Relics of the Parallel World</p>
+
+<div class="grid">
+
+<!-- 1 -->
+<div class="artifact-card">
+<div class="icon-header"><i class="fas fa-eye"></i><h3>Amulet of Insight</h3></div>
+<p class="desc">Reveals hidden truths.</p>
+
+<div class="lore">
+<h3>Amulet of Insight</h3>
+<p>Reveals hidden truths and enemy weaknesses. Helped uncover the Desert Golem’s core.</p>
+<b>Capabilities:</b>
+<ul><li>Expose illusions</li><li>Solve puzzles</li></ul>
+<b>Symbolism:</b> Intelligence • Clarity
+</div>
+</div>
+
+<!-- 2 -->
+<div class="artifact-card">
+<div class="icon-header"><i class="fas fa-shield-alt"></i><h3>Shield of Fortitude</h3></div>
+<p class="desc">Powerful defensive relic.</p>
+
+<div class="lore">
+<h3>Shield of Fortitude</h3>
+<p>Protects against powerful attacks and harsh environments.</p>
+<b>Capabilities:</b>
+<ul><li>Magic resistance</li><li>Endurance boost</li></ul>
+<b>Symbolism:</b> Strength • Survival
+</div>
+</div>
+
+<!-- 3 -->
+<div class="artifact-card">
+<div class="icon-header"><i class="fas fa-crown"></i><h3>Crown of Wisdom</h3></div>
+<p class="desc">Enhances strategy.</p>
+
+<div class="lore">
+<h3>Crown of Wisdom</h3>
+<p>Boosts decision-making and leadership under pressure.</p>
+<b>Capabilities:</b>
+<ul><li>Mental clarity</li><li>Team synergy</li></ul>
+<b>Symbolism:</b> Leadership • Knowledge
+</div>
+</div>
+
+<!-- 4-7 crystals -->
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-mountain"></i><h3>Earth Crystal</h3></div><p class="desc">Control terrain.</p><div class="lore"><h3>Earth Crystal</h3><p>Grants control over terrain and defense.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-tint"></i><h3>Water Crystal</h3></div><p class="desc">Fluid adaptability.</p><div class="lore"><h3>Water Crystal</h3><p>Controls water and enhances flexibility.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-fire"></i><h3>Fire Crystal</h3></div><p class="desc">Fire power.</p><div class="lore"><h3>Fire Crystal</h3><p>Boosts attack and courage.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-wind"></i><h3>Air Crystal</h3></div><p class="desc">Speed & wind.</p><div class="lore"><h3>Air Crystal</h3><p>Grants speed and agility.</p></div></div>
+
+<!-- 8-10 -->
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-sun"></i><h3>Sunstone</h3></div><p class="desc">Light power.</p><div class="lore"><h3>Sunstone</h3><p>Counter darkness magic.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-moon"></i><h3>Mondial</h3></div><p class="desc">Lunar control.</p><div class="lore"><h3>Mondial</h3><p>Controls shadows.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-star"></i><h3>Star Shard</h3></div><p class="desc">Cosmic boost.</p><div class="lore"><h3>Star Shard</h3><p>Enhances magic massively.</p></div></div>
+
+<!-- 11-14 -->
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-monument"></i><h3>Pillar of Earth</h3></div><p class="desc">Stabilizes land.</p><div class="lore"><h3>Pillar of Earth</h3></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-water"></i><h3>Pillar of Water</h3></div><p class="desc">Ocean balance.</p><div class="lore"><h3>Pillar of Water</h3></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-fire"></i><h3>Pillar of Fire</h3></div><p class="desc">Fire balance.</p><div class="lore"><h3>Pillar of Fire</h3></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-cloud"></i><h3>Pillar of Air</h3></div><p class="desc">Air balance.</p><div class="lore"><h3>Pillar of Air</h3></div></div>
+
+<!-- 15-18 -->
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-gem"></i><h3>Harmony Stone</h3></div><p class="desc">Core balance.</p><div class="lore"><h3>Harmony Stone</h3><p>Main stabilizer of worlds.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-seedling"></i><h3>Seed of Unity</h3></div><p class="desc">Future link.</p><div class="lore"><h3>Seed of Unity</h3><p>Creates the Tree of Balance.</p></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-scroll"></i><h3>Ancient Runes</h3></div><p class="desc">Unlock portals.</p><div class="lore"><h3>Ancient Runes</h3></div></div>
+
+<div class="artifact-card"><div class="icon-header"><i class="fas fa-door-open"></i><h3>Portal System</h3></div><p class="desc">Travel system.</p><div class="lore"><h3>Portal System</h3></div></div>
+
+</div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+<div class="modal-content" id="modalContent"></div>
+<div class="modal-close" id="close">&times;</div>
+</div>
+
+<script>
+// Animation
+const obs = new IntersectionObserver(e=>{
+e.forEach(x=>{ if(x.isIntersecting){ x.target.classList.add("show"); }});
+});
+document.querySelectorAll(".artifact-card").forEach(c=>{
+c.classList.add("fade-in");
+obs.observe(c);
+});
+
+// Modal with lore
+const modal = document.getElementById("modal");
+const modalContent = document.getElementById("modalContent");
+
+document.querySelectorAll(".artifact-card").forEach(card=>{
+card.onclick = ()=>{
+modal.classList.add("active");
+modalContent.innerHTML = card.querySelector(".lore").innerHTML;
+};
+});
+
+document.getElementById("close").onclick = ()=> modal.classList.remove("active");
+
+modal.onclick = (e)=>{
+if(e.target === modal){ modal.classList.remove("active"); }
+};
+</script>
+
+</body>
+</html>

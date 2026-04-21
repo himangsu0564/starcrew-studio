@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Guardians Gallery | Starcrew Studio</title>
+
+<meta name="description" content="Explore the mystery of the Parallel World with Starcrew Studio. Meet the Guardians of Balance: John, Alex, Maria, and Sam.">
+<meta name="keywords" content="Starcrew Studio, Parallel World, Guardians of Balance, John, Alex, Maria, Sam, Character Lore">
+<meta name="author" content="Starcrew Studio">
+
+<meta property="og:title" content="Guardians Gallery | Starcrew Studio">
+<meta property="og:description" content="Join the adventure and discover the full legend of the Guardians.">
+<meta property="og:image" content="https://himangsu0564.github.io/starcrew-studio/starcrew%20logo.jpg">
+<meta property="og:url" content="https://himangsu0564.github.io/starcrew-studio/characters.html">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="starcrew logo.jpg" type="image/jpeg">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root { 
+    --primary-blue: #00e5ff; 
+    --card-bg: rgba(20, 20, 28, 0.6); 
+    --text-light: #eaeaea; 
+}
+
+* { box-sizing: border-box; }
+
+body { 
+    margin: 0; 
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-light);
+    background: #000;
+    overflow-x: hidden;
+}
+
+/* PARTICLE CANVAS */
+#stars {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+}
+
+/* BACKGROUND GLOW */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(0,229,255,0.15), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0,100,255,0.12), transparent 45%);
+    z-index: -2;
+}
+
+/* LAYOUT */
+.container { 
+    max-width: 1000px; 
+    margin: auto; 
+    padding: 60px 20px; 
+}
+
+/* BACK BUTTON */
+.back-btn { 
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--primary-blue);
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(0,229,255,0.25);
+    transition: 0.3s;
+}
+
+.back-btn:hover { 
+    transform: translateX(-6px);
+    box-shadow: 0 0 20px rgba(0,229,255,0.3);
+}
+
+/* TITLE */
+h1 {
+    text-align: center;
+    font-size: 2.7rem;
+    margin: 40px 0;
+    text-shadow: 0 0 20px rgba(0,229,255,0.6);
+}
+
+/* SEARCH */
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 50px;
+}
+
+#heroSearch {
+    width: 100%;
+    padding: 15px 50px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    color: var(--primary-blue);
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* CARDS */
+.char-card {
+    background: var(--card-bg);
+    padding: 35px 20px;
+    border-radius: 18px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    transition: 0.4s;
+    backdrop-filter: blur(12px);
+}
+
+.char-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 30px rgba(0,229,255,0.25);
+}
+
+.char-card i {
+    font-size: 3rem;
+    color: var(--primary-blue);
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+}
+
+.modal-content {
+    background: rgba(20,20,28,0.95);
+    margin: 6% auto;
+    padding: 40px;
+    border-radius: 25px;
+    max-width: 600px;
+    border: 1px solid rgba(0,229,255,0.4);
+    box-shadow: 0 0 40px rgba(0,229,255,0.15);
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 35px;
+    cursor: pointer;
+    color: #888;
+}
+
+.close-modal:hover { color: var(--primary-blue); }
+
+.guardian-tag {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,229,255,0.3);
+    color: var(--primary-blue);
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #555;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PARTICLE BACKGROUND -->
+<canvas id="stars"></canvas>
+
+<div class="container">
+    <a class="back-btn" href="index.html">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <h1>The Guardians of Balance</h1>
+
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input id="heroSearch" onkeyup="filterHeroes()" placeholder="Find a Guardian...">
+    </div>
+
+    <div class="grid" id="heroGrid">
+
+        <div class="char-card" onclick="openLore('john')">
+            <i class="fas fa-crown"></i>
+            <h3>John</h3><p>The Determined Leader</p>
+        </div>
+
+        <div class="char-card" onclick="openLore('alex')">
+            <i class="fas fa-chess-knight"></i>
+            <h3>Alex</h3><p>The Loyal Strategist</p>
+        </div>
+
+        <div class="char-card" onclick="openLore('maria')">
+            <i class="fas fa-heart"></i>
+            <h3>Maria</h3><p>The Compassionate Heart</p>
+        </div>
+
+        <div class="char-card" onclick="openLore('sam')">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Sam</h3><p>The Brave Protector</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL -->
+<div id="loreModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeLore()">&times;</span>
+        <div id="loreBody"></div>
+    </div>
+</div>
+
+<footer>&copy; 2026 Starcrew Studio</footer>
+
+<script>
+
+/* HERO DATA */
+const heroLore = {
+    john: {
+        name: "John",
+        role: "The Determined Leader",
+        desc: "John is the driving force behind the adventure. He grows into a fearless leader.",
+        tag: "Guardian of Strength"
+    },
+    alex: {
+        name: "Alex",
+        role: "The Loyal Strategist",
+        desc: "Alex analyzes every situation and protects the team with intelligence.",
+        tag: "Guardian of Loyalty"
+    },
+    maria: {
+        name: "Maria",
+        role: "The Compassionate Heart",
+        desc: "Maria keeps the team emotionally strong and united.",
+        tag: "Guardian of Compassion"
+    },
+    sam: {
+        name: "Sam",
+        role: "The Brave Protector",
+        desc: "Sam becomes the strongest shield of the group.",
+        tag: "Guardian of Bravery"
+    }
+};
+
+/* MODAL */
+function openLore(key){
+    const h = heroLore[key];
+    document.getElementById("loreBody").innerHTML = `
+        <h2>${h.name}</h2>
+        <p>${h.role}</p>
+        <p>${h.desc}</p>
+        <div class="guardian-tag">${h.tag}</div>
+    `;
+    document.getElementById("loreModal").style.display="block";
+    document.body.style.overflow="hidden";
+}
+
+function closeLore(){
+    document.getElementById("loreModal").style.display="none";
+    document.body.style.overflow="auto";
+}
+
+function filterHeroes(){
+    let v = document.getElementById("heroSearch").value.toLowerCase();
+    let c = document.getElementsByClassName("char-card");
+    for(let i=0;i<c.length;i++){
+        let n = c[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+        c[i].style.display = n.includes(v) ? "" : "none";
+    }
+}
+
+window.onclick = e => {
+    if(e.target.id==="loreModal") closeLore();
+};
+
+/* PARTICLE STAR SYSTEM */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+let mouse = {x:0,y:0};
+
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+for(let i=0;i<120;i++){
+    stars.push({
+        x: Math.random()*innerWidth,
+        y: Math.random()*innerHeight,
+        r: Math.random()*1.5,
+        dx:(Math.random()-0.5)*0.3,
+        dy:(Math.random()-0.5)*0.3
+    });
+}
+
+window.addEventListener("mousemove", e=>{
+    mouse.x=e.x; mouse.y=e.y;
+});
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    for(let s of stars){
+        s.x+=s.dx;
+        s.y+=s.dy;
+
+        if(s.x<0) s.x=innerWidth;
+        if(s.x>innerWidth) s.x=0;
+        if(s.y<0) s.y=innerHeight;
+        if(s.y>innerHeight) s.y=0;
+
+        let dx=mouse.x-s.x;
+        let dy=mouse.y-s.y;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle = dist<120 ? "#00e5ff" : "rgba(0,229,255,0.4)";
+        ctx.fill();
+    }
+
+    requestAnimationFrame(animate);
+}
+animate();
+
+</script>
+
+</body>
+</html>
